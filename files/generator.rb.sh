@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'date'
+
 random_strings = %w[
   Woodcutter dodo cig rectified munippus unmutilative segner inexpugnably
   nonsymptomatic napoleon nonsubmersible averrhoist unlampooned elegiac harmonica
@@ -21,6 +23,7 @@ File.open('input/users.csv', 'w') do |f|
   header += (1..10).map { |i| "float#{i}:float" }.join(',') + ','
   header += (1..5).map  { |i| "datetime#{i}:datetime" }.join(',') + ','
   header += (1..5).map  { |i| "date#{i}:date" }.join(',')
+  f.puts header
 
   (1..1_000_000).each do |n|
     record = "#{n},email#{n}@example.org,"
