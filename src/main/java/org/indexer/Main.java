@@ -6,12 +6,12 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Indexer indexer = new Indexer("./files/input/users.csv", "./files/output");
 
-        long start_time = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
         System.out.println("Creating index");
 
         indexer.run();
 
-        long finish_time = System.currentTimeMillis();
-        System.out.format("Done! Finished in %d seconds.\n", (finish_time - start_time) / 1000);
+        long finishTime = System.currentTimeMillis();
+        System.out.format("Done! Finished in %d seconds.\n", (finishTime - startTime) / 1000);
     }
 }
