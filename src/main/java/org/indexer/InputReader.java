@@ -5,14 +5,14 @@ import org.apache.lucene.document.*;
 import java.util.Iterator;
 
 public class InputReader implements Iterator<Document> {
-    private InputProvider provider = null;
-    private Document      document = null;
-    private Field         fields[] = null;
+    private InputProvider provider;
+    private Document      document;
+    private Field         fields[];
 
     public InputReader(InputProvider input) {
         this.provider = input;
-        this.document = new Document();
-        this.fields   = new Field[provider.getFields().size()];
+        this.document = Factory.getDocument();
+        this.fields   = Factory.getDocumentFields(provider.getFields().size());
 
         this.initDocumentFields();
     }
