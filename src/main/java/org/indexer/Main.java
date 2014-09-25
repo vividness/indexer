@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Indexer indexer = new Indexer("./files/input/users.csv");
+        Indexer indexer = new Indexer("./files/input/users.csv", "./files/output");
 
         long start_time = System.currentTimeMillis();
         System.out.println("Creating index");
