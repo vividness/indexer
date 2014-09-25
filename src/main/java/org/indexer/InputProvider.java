@@ -1,23 +1,20 @@
 package org.indexer;
 
-import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 public class InputProvider implements Iterator<CSVRecord> {
-    private CSVParser parser             = null;
-    private Iterator<CSVRecord> iterator = null;
+    private CSVParser parser;
+    private Iterator<CSVRecord> iterator;
 
     private LinkedHashMap<String, String> fields = new LinkedHashMap<String, String>();
 
     public InputProvider(String path) throws IOException {
-        this.parser   = CSVParser.parse(new File(path), Charset.defaultCharset(), CSVFormat.RFC4180.withHeader());
+        this.parser   = Factory.getCsvParser(path);
         this.iterator = this.parser.iterator();
 
         parseHeader();
