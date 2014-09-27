@@ -30,6 +30,11 @@ public class Command {
     }
 
     public static void printUsage() {
-        System.out.println("USAGE: For now read the source :)");
+        System.out.println("Indexer, version 0.0");
+        System.out.println("\nUsage:\n");
+        System.out.println("- indexer create [input_file] [output_dir]");
+        System.out.println("- indexer update [input_file] [index_dir]");
+        System.out.println("- indexer drop [index_dir]");
+        System.out.println("- indexer select [all|first [n]|last [n]] from [index_dir] where [criteria]");
     }
 }
