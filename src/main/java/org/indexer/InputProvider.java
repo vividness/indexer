@@ -14,7 +14,7 @@ public class InputProvider implements Iterator<CSVRecord> {
     private LinkedHashMap<String, String> fields = new LinkedHashMap<String, String>();
 
     public InputProvider(String path) throws IOException {
-        this.parser   = Factory.getCsvParser(path);
+        this.parser   = Components.getCsvParser(path);
         this.iterator = this.parser.iterator();
 
         parseHeader();
