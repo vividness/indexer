@@ -3,12 +3,19 @@ package org.indexer;
 import java.io.IOException;
 
 public class Indexer {
+    public enum OpenMode { CREATE, APPEND, CREATE_OR_APPEND }
+
     private InputReader input;
     private OutputWriter output;
 
     public Indexer(String inputFilePath, String outputDirPath) throws IOException {
         this.input  = Components.getInputReader(inputFilePath);
         this.output = Components.getOutputWriter(outputDirPath);
+    }
+
+    public Indexer(String inputFilePath, String outputDirPath, OpenMode mode) throws IOException {
+        this.input  = Components.getInputReader(inputFilePath);
+        this.output = Components.getOutputWriter(outputDirPath, mode);
     }
 
     public void index() throws IOException {
