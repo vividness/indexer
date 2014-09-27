@@ -6,7 +6,7 @@ import org.apache.lucene.index.Term;
 
 import java.io.IOException;
 
-public class OutputWriter {
+final class OutputWriter {
     private IndexWriter provider;
 
     public OutputWriter(String outputDirPath) throws IOException {

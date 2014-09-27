@@ -2,7 +2,7 @@ package org.indexer;
 
 import java.io.IOException;
 
-public class Command {
+abstract class Command {
     public static void create(String inputFilePath, String outputDirPath) throws IOException {
         Long startTime = System.currentTimeMillis();
         Indexer index  = new Indexer(inputFilePath, outputDirPath);

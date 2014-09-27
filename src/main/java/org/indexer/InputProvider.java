@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
-public class InputProvider implements Iterator<CSVRecord> {
+final class InputProvider implements Iterator<CSVRecord> {
     private CSVParser parser;
     private Iterator<CSVRecord> iterator;
 

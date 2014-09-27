@@ -25,7 +25,7 @@ File.open('input/users.csv', 'w') do |f|
   header += (1..5).map  { |i| "date#{i}:date" }.join(',')
   f.puts header
 
-  (1..1_000_000).each do |n|
+  (1..10).each do |n|
     record = "#{n},email#{n}@example.org,"
     record += (1..48).map { |i| random_strings.sample }.join(',') + ','
     record += (1..30).map { |i| "#{rand(10000)}" }.join(',') + ','

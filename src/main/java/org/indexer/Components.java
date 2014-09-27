@@ -17,7 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-public class Components {
+abstract class Components {
     public static class CSV {
         public static CSVParser getCsvParser(String inputFilePath) throws IOException {
             return CSVParser.parse(new File(inputFilePath), Charset.defaultCharset(), CSVFormat.RFC4180.withHeader());

@@ -4,7 +4,7 @@ import org.apache.commons.csv.CSVRecord;
 import org.apache.lucene.document.*;
 import java.util.Iterator;
 
-public class InputReader implements Iterator<Document> {
+final class InputReader implements Iterator<Document> {
     private InputProvider provider;
     private Document      document;
     private Field         fields[];
