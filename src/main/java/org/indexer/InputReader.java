@@ -11,8 +11,8 @@ public class InputReader implements Iterator<Document> {
 
     public InputReader(InputProvider input) {
         this.provider = input;
-        this.document = Factory.getDocument();
-        this.fields   = Factory.getDocumentFields(provider.getFields().size());
+        this.document = Components.getDocument();
+        this.fields   = Components.getDocumentFields(provider.getFields().size());
 
         this.initDocumentFields();
     }
