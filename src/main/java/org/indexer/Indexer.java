@@ -11,11 +11,26 @@ public class Indexer {
         this.output = Components.getOutputWriter(outputDirPath);
     }
 
-    public void run() throws IOException {
+    public void index() throws IOException {
         while (this.input.hasNext()) {
             this.output.write(this.input.next());
         }
 
         this.output.close();
+    }
+
+    public void create() throws IOException {
+        index();
+    }
+
+    public void update() throws IOException {
+        index();
+    }
+
+    public static void drop(String outputDirPath) throws IOException {
+        OutputWriter output = Components.getOutputWriter(outputDirPath);
+
+        output.drop();
+        output.close();
     }
 }
