@@ -39,10 +39,32 @@ public class Components {
 
             return new IndexWriter(outputDir, config);
         }
+
+        public static IndexWriter getIndexWriter(String outputDirPath, Indexer.OpenMode mode) throws IOException {
+            IndexWriterConfig.OpenMode luceneOpenMode;
+
+            if (mode == Indexer.OpenMode.CREATE_OR_APPEND) {
+                luceneOpenMode = IndexWriterConfig.OpenMode.CREATE_OR_APPEND;
+            } else if (mode == Indexer.OpenMode.APPEND) {
+                luceneOpenMode = IndexWriterConfig.OpenMode.APPEND;
+            } else {
+                luceneOpenMode = IndexWriterConfig.OpenMode.CREATE;
+            }
+
+            Directory outputDir = FSDirectory.open(new File(outputDirPath));
+            Analyzer analyzer   = new StandardAnalyzer(Version.LATEST);
+            IndexWriterConfig config = new IndexWriterConfig(Version.LATEST, analyzer).setOpenMode(luceneOpenMode);
+
+            return new IndexWriter(outputDir, config);
+        }
     }
 
     public static OutputWriter getOutputWriter(String outputDirPath) throws IOException {
         return new OutputWriter(outputDirPath);
+    }
+
+    public static OutputWriter getOutputWriter(String outputDirPath, Indexer.OpenMode mode) throws IOException {
+        return new OutputWriter(outputDirPath, mode);
     }
 
     public static InputReader getInputReader(String inputFilePath) throws IOException {
