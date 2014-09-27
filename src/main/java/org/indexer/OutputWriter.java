@@ -8,12 +8,17 @@ import java.io.IOException;
 public class OutputWriter {
     private IndexWriter provider;
 
-    public OutputWriter(String outputPath) throws IOException {
-        this.provider = Components.getIndexWriter(outputPath);
+    public OutputWriter(String outputDirPath) throws IOException {
+        this.provider = Components.Lucene.getIndexWriter(outputDirPath);
     }
 
     public void write(Document doc) throws IOException {
         this.provider.addDocument(doc);
+    }
+
+    public void drop() throws IOException {
+        this.provider.deleteAll();
+        this.provider.commit();
     }
 
     public void close() throws IOException {
