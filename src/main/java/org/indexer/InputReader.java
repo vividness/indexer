@@ -11,8 +11,8 @@ public class InputReader implements Iterator<Document> {
 
     public InputReader(InputProvider input) {
         this.provider = input;
-        this.document = Components.Lucene.getDocument();
-        this.fields   = Components.Lucene.getDocumentFields(provider.getFields().size());
+        this.document = Components.Lucene.getEmptyDocument();
+        this.fields   = Components.Lucene.getEmptyDocumentFields(provider.getFields().size());
 
         this.initDocumentFields();
     }
@@ -26,15 +26,15 @@ public class InputReader implements Iterator<Document> {
             String fieldType = (String) inputFieldTypes[i];
 
             if (fieldType.equals("integer")) {
-                if (fieldName.equals("id")) {
+                if (fieldName.toLowerCase().equals("id")) {
                     fields[i] = new IntField(fieldName, 0, Field.Store.YES);
                 } else {
-                    fields[i] = new IntField(fieldName, 0, Field.Store.NO);
+                    fields[i] = new IntField(fieldName, 0, Field.Store.YES);
                 }
             } else if (fieldType.equals("float")) {
-                fields[i] = new FloatField(fieldName, 0F, Field.Store.NO);
+                fields[i] = new FloatField(fieldName, 0F, Field.Store.YES);
             } else {
-                fields[i] = new StringField(fieldName, "", Field.Store.NO);
+                fields[i] = new StringField(fieldName, "", Field.Store.YES);
             }
 
             this.document.add(fields[i]);
