@@ -17,32 +17,36 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 public class Components {
-    public static CSVParser getCsvParser(String path) throws IOException {
-        return CSVParser.parse(new File(path), Charset.defaultCharset(), CSVFormat.RFC4180.withHeader());
+    public static class CSV {
+        public static CSVParser getCsvParser(String inputFilePath) throws IOException {
+            return CSVParser.parse(new File(inputFilePath), Charset.defaultCharset(), CSVFormat.RFC4180.withHeader());
+        }
     }
 
-    public static Document getDocument() {
-        return new Document();
+    public static class Lucene {
+        public static Document getDocument() {
+            return new Document();
+        }
+
+        public static Field[] getDocumentFields(int n) {
+            return new Field[n];
+        }
+
+        public static IndexWriter getIndexWriter(String outputDirPath) throws IOException {
+            Directory outputDir = FSDirectory.open(new File(outputDirPath));
+            Analyzer analyzer   = new StandardAnalyzer(Version.LUCENE_4_10_0);
+            IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_4_10_0, analyzer).setOpenMode(IndexWriterConfig.OpenMode.CREATE);
+
+            return new IndexWriter(outputDir, config);
+        }
     }
 
-    public static Field[] getDocumentFields(int n) {
-        return new Field[n];
+    public static OutputWriter getOutputWriter(String outputDirPath) throws IOException {
+        return new OutputWriter(outputDirPath);
     }
 
-    public static IndexWriter getIndexWriter(String outputPath) throws IOException  {
-        Directory outputDir      = FSDirectory.open(new File(outputPath));
-        Analyzer analyzer        = new StandardAnalyzer(Version.LUCENE_4_10_0);
-        IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_4_10_0, analyzer).setOpenMode(IndexWriterConfig.OpenMode.CREATE);
-
-        return new IndexWriter(outputDir, config);
-    }
-
-    public static OutputWriter getOutputWriter(String outputPath) {
-        return new OutputWriter(outputPath);
-    }
-
-    public static InputReader getInputReader(String filePath) throws IOException  {
-        InputProvider provider = new InputProvider(filePath);
+    public static InputReader getInputReader(String inputFilePath) throws IOException {
+        InputProvider provider = new InputProvider(inputFilePath);
 
         return new InputReader(provider);
     }
