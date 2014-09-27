@@ -18,26 +18,26 @@ public class Indexer {
         this.output = Components.getOutputWriter(outputDirPath, mode);
     }
 
-    public void index() throws IOException {
+    public void insert() throws IOException {
         while (this.input.hasNext()) {
-            this.output.write(this.input.next());
+            this.output.insert(this.input.next());
         }
 
         this.output.close();
     }
 
-    public void create() throws IOException {
-        index();
-    }
-
     public void update() throws IOException {
-        index();
+        while (this.input.hasNext()) {
+            this.output.update(this.input.next());
+        }
+
+        this.output.close();
     }
 
     public static void drop(String outputDirPath) throws IOException {
         OutputWriter output = Components.getOutputWriter(outputDirPath);
 
-        output.drop();
+        output.delete();
         output.close();
     }
 }
