@@ -13,8 +13,8 @@ public class InputProvider implements Iterator<CSVRecord> {
 
     private LinkedHashMap<String, String> fields = new LinkedHashMap<String, String>();
 
-    public InputProvider(String path) throws IOException {
-        this.parser   = Components.getCsvParser(path);
+    public InputProvider(String inputFilePath) throws IOException {
+        this.parser   = Components.CSV.getCsvParser(inputFilePath);
         this.iterator = this.parser.iterator();
 
         parseHeader();
