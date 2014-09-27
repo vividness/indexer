@@ -6,6 +6,7 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
@@ -24,11 +25,11 @@ public class Components {
     }
 
     public static class Lucene {
-        public static Document getDocument() {
+        public static Document getEmptyDocument() {
             return new Document();
         }
 
-        public static Field[] getDocumentFields(int n) {
+        public static Field[] getEmptyDocumentFields(int n) {
             return new Field[n];
         }
 
@@ -56,6 +57,11 @@ public class Components {
             IndexWriterConfig config = new IndexWriterConfig(Version.LATEST, analyzer).setOpenMode(luceneOpenMode);
 
             return new IndexWriter(outputDir, config);
+        }
+
+        public static IndexReader getIndexReader(String outputDirPath) throws IOException {
+            Directory outputDir = FSDirectory.open(new File(outputDirPath));
+            return IndexReader.open(outputDir);
         }
     }
 
