@@ -8,7 +8,7 @@ public class Command {
         Indexer index  = new Indexer(inputFilePath, outputDirPath);
 
         System.out.print("Creating index " + outputDirPath + " from " + inputFilePath + " ... ");
-        index.create();
+        index.insert();
 
         System.out.format("Finished in %.2f seconds.\n", (float) (System.currentTimeMillis() - startTime) / 1000);
     }
@@ -17,8 +17,8 @@ public class Command {
         Long startTime = System.currentTimeMillis();
         Indexer index  = new Indexer(inputFilePath, outputDirPath, Indexer.OpenMode.APPEND);
 
-        System.out.print("Updating index " + outputDirPath + " with " + inputFilePath + " ... ");
-        index.update();
+        System.out.print("Appending index " + outputDirPath + " with " + inputFilePath + " ... ");
+        index.insert();
 
         System.out.format("Finished in %.2f seconds.\n", (float) (System.currentTimeMillis() - startTime) / 1000);
     }
@@ -31,8 +31,18 @@ public class Command {
         System.out.format("Finished in %.2f seconds.\n", (float) (System.currentTimeMillis() - startTime) / 1000);
     }
 
-    public static void select(int limit) {
+    /**
+     * WARNING! This one is broken
+     */
+    public static void update(String inputFilePath, String outputDirPath) throws IOException {
+        Long startTime = System.currentTimeMillis();
+        Indexer index  = new Indexer(inputFilePath, outputDirPath, Indexer.OpenMode.CREATE_OR_APPEND);
 
+        System.out.print("Updating index " + outputDirPath + " with " + inputFilePath + " ... ");
+        index.update();
+
+        System.out.format("Finished in %.2f seconds.\n", (float) (System.currentTimeMillis() - startTime) / 1000);
+        System.out.println("Number of docs in index " + Components.Lucene.getIndexReader(outputDirPath).numDocs());
     }
 
     public static void printUsage() {
