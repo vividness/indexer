@@ -1,4 +1,4 @@
-package org.indexer;
+package org.indexer.indexing;
 
 import java.io.IOException;
 

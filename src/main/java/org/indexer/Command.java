@@ -1,5 +1,7 @@
 package org.indexer;
 
+import org.indexer.indexing.Indexer;
+
 import java.io.IOException;
 
 abstract class Command {
@@ -31,8 +33,18 @@ abstract class Command {
         System.out.format("Finished in %.2f seconds.\n", (float) (System.currentTimeMillis() - startTime) / 1000);
     }
 
+    public static void find(String outputDirPath) throws IOException {
+        // Finder finder = new Finder(outputDirPath);
+        // String result = finder.find();
+
+        // instantiate Finder using Component
+        // run find command
+        // print results
+    }
+
     /**
-     * WARNING! This one is broken
+     * WARNING! This one appears broken. It doesn't remove documents. Maybe it shouldn't because of the lib performance
+     * double check updates once the search components is built.
      */
     public static void update(String inputFilePath, String outputDirPath) throws IOException {
         Long startTime = System.currentTimeMillis();
@@ -42,7 +54,6 @@ abstract class Command {
         index.update();
 
         System.out.format("Finished in %.2f seconds.\n", (float) (System.currentTimeMillis() - startTime) / 1000);
-        System.out.println("Number of docs in index " + Components.Lucene.getIndexReader(outputDirPath).numDocs());
     }
 
     public static void printUsage() {
@@ -57,6 +68,6 @@ abstract class Command {
         System.out.println("- indexer create [ input.csv ] [ index/dir ]");
         System.out.println("- indexer update [ input.csv ] [ index/dir ]");
         System.out.println("- indexer drop [ index/dir ]");
-        System.out.println("- indexer select [ all|first n|last n ] from [ index/dir ] where [ criteria ]");
+        System.out.println("- indexer find [ all | first n | last n ] from [ index/dir ] where [ criteria ]");
     }
 }

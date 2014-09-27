@@ -1,4 +1,4 @@
-package org.indexer;
+package org.indexer.indexing;
 
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;

@@ -1,4 +1,4 @@
-package org.indexer;
+package org.indexer.indexing;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -57,11 +57,6 @@ abstract class Components {
             IndexWriterConfig config = new IndexWriterConfig(Version.LATEST, analyzer).setOpenMode(luceneOpenMode);
 
             return new IndexWriter(outputDir, config);
-        }
-
-        public static IndexReader getIndexReader(String outputDirPath) throws IOException {
-            Directory outputDir = FSDirectory.open(new File(outputDirPath));
-            return IndexReader.open(outputDir);
         }
     }
 

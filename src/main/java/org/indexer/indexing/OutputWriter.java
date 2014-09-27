@@ -1,4 +1,4 @@
-package org.indexer;
+package org.indexer.indexing;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexWriter;

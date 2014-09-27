@@ -1,7 +1,8 @@
-package org.indexer;
+package org.indexer.indexing;
 
 import org.apache.commons.csv.CSVRecord;
 import org.apache.lucene.document.*;
+
 import java.util.Iterator;
 
 final class InputReader implements Iterator<Document> {
