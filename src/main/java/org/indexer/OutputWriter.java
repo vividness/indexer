@@ -2,6 +2,7 @@ package org.indexer;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.Term;
 
 import java.io.IOException;
 
@@ -16,11 +17,15 @@ public class OutputWriter {
         this.provider = Components.Lucene.getIndexWriter(outputDirPath, mode);
     }
 
-    public void write(Document doc) throws IOException {
+    public void insert(Document doc) throws IOException {
         this.provider.addDocument(doc);
     }
 
-    public void drop() throws IOException {
+    public void update(Document doc) throws IOException {
+        this.provider.updateDocument(new Term("id", doc.get("id")), doc);
+    }
+
+    public void delete() throws IOException {
         this.provider.deleteAll();
         this.provider.commit();
     }
