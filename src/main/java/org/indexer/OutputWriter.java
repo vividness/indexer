@@ -12,6 +12,10 @@ public class OutputWriter {
         this.provider = Components.Lucene.getIndexWriter(outputDirPath);
     }
 
+    public OutputWriter(String outputDirPath, Indexer.OpenMode mode) throws IOException {
+        this.provider = Components.Lucene.getIndexWriter(outputDirPath, mode);
+    }
+
     public void write(Document doc) throws IOException {
         this.provider.addDocument(doc);
     }
