@@ -3,6 +3,7 @@ package org.indexer.indexing;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.lucene.document.*;
 
+import java.io.IOException;
 import java.util.Iterator;
 
 final class InputReader implements Iterator<Document> {
@@ -10,8 +11,8 @@ final class InputReader implements Iterator<Document> {
     private Document      document;
     private Field         fields[];
 
-    public InputReader(InputProvider input) {
-        this.provider = input;
+    public InputReader(String inputFilePath) throws IOException {
+        this.provider = Components.CSV.getInputProvider(inputFilePath);
         this.document = Components.Lucene.getEmptyDocument();
         this.fields   = Components.Lucene.getEmptyDocumentFields(provider.getFields().size());
 
