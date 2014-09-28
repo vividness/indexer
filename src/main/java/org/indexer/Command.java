@@ -34,17 +34,17 @@ abstract class Command {
     }
 
     public static void find(String outputDirPath) throws IOException {
-        // Finder finder = new Finder(outputDirPath);
-        // String result = finder.find();
+        // Searcher searcher = new Searcher(outputDirPath);
+        // String result     = searcher.find();
 
-        // instantiate Finder using Component
-        // run find command
         // print results
+        // ideally, different formats should be supported e.g. JSON, CSV, XML
     }
 
     /**
-     * WARNING! This one appears broken. It doesn't remove documents. Maybe it shouldn't because of the lib performance
-     * double check updates once the search components is built.
+     * WARNING! This one appears broken. It doesn't remove documents
+     * and maybe it shouldn't because of the lib performance.
+     * Double check updates once the search components is built.
      */
     public static void update(String inputFilePath, String outputDirPath) throws IOException {
         Long startTime = System.currentTimeMillis();
