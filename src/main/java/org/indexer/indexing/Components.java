@@ -6,7 +6,6 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
@@ -21,6 +20,10 @@ abstract class Components {
     public static class CSV {
         public static CSVParser getCsvParser(String inputFilePath) throws IOException {
             return CSVParser.parse(new File(inputFilePath), Charset.defaultCharset(), CSVFormat.RFC4180.withHeader());
+        }
+
+        public static InputProvider getInputProvider(String inputFilePath) throws IOException {
+            return new InputProvider(inputFilePath);
         }
     }
 
@@ -69,8 +72,6 @@ abstract class Components {
     }
 
     public static InputReader getInputReader(String inputFilePath) throws IOException {
-        InputProvider provider = new InputProvider(inputFilePath);
-
-        return new InputReader(provider);
+        return new InputReader(inputFilePath);
     }
 }
