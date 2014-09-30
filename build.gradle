@@ -10,7 +10,7 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 
-    runtime 'org.apache.lucene:lucene-core:4.10.0',
+    compile 'org.apache.lucene:lucene-core:4.10.0',
             'org.apache.lucene:lucene-analyzers-common:4.10.0',
             'org.apache.lucene:lucene-queryparser:4.10.0',
             'org.apache.commons:commons-csv:1.0'
