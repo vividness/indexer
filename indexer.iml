@@ -15,9 +15,12 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="TEST" name="Gradle: junit-4.11" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: hamcrest-core-1.3" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: lucene-core-4.10.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: lucene-analyzers-common-4.10.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: commons-csv-1.0" level="project" />
+    <orderEntry type="library" name="Gradle: lucene-core-4.10.0" level="project" />
+    <orderEntry type="library" name="Gradle: lucene-queryparser-4.10.0" level="project" />
+    <orderEntry type="library" name="Gradle: lucene-analyzers-common-4.10.0" level="project" />
+    <orderEntry type="library" name="Gradle: commons-csv-1.0" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: lucene-queries-4.10.0" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: lucene-sandbox-4.10.0" level="project" />
   </component>
 </module>
 
