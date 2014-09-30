@@ -1,8 +1,11 @@
 package org.indexer;
 
 import org.indexer.indexing.Indexer;
+import org.indexer.search.Searcher;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 abstract class Command {
     public static void create(String inputFilePath, String outputDirPath) throws IOException {
@@ -34,8 +37,8 @@ abstract class Command {
     }
 
     public static void find(String outputDirPath) throws IOException {
-        // Searcher searcher = new Searcher(outputDirPath);
-        // String result     = searcher.find();
+        Searcher searcher = new Searcher(outputDirPath);
+        ArrayList<LinkedHashMap<String, String>> result = searcher.find();
 
         // print results
         // ideally, different formats should be supported e.g. JSON, CSV, XML
