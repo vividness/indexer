@@ -1,9 +1,17 @@
 package org.indexer.search;
 
-public class Searcher {
-    public Searcher(String indexDir) {
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
+public class Searcher {
+    private InputReader input;
+
+    public Searcher(String indexDirPath) throws IOException {
+        this.input = Components.getInputReader(indexDirPath);
     }
 
-    public void find() {}
+    public ArrayList<LinkedHashMap<String, String>> find() {
+        return new ArrayList<LinkedHashMap<String, String>>();
+    }
 }
