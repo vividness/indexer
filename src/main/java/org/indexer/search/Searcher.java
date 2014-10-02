@@ -2,7 +2,6 @@ package org.indexer.search;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 
 public class Searcher {
     private InputReader input;
@@ -11,7 +10,15 @@ public class Searcher {
         this.input = Components.getInputReader(indexDirPath);
     }
 
-    public ArrayList<LinkedHashMap<String, String>> find() {
-        return new ArrayList<LinkedHashMap<String, String>>();
+    public ArrayList<String> find(String queryString) throws IOException {
+        ArrayList<String> result = new ArrayList<String>();
+
+        this.input.query(queryString);
+
+        while (this.input.hasNext()) {
+            result.add(this.input.next());
+        }
+
+        return result;
     }
 }
