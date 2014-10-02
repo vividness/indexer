@@ -1,7 +1,7 @@
 package org.indexer.indexing;
 
-import org.apache.commons.csv.CSVRecord;
 import org.apache.lucene.document.*;
+import org.apache.commons.csv.CSVRecord;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -31,12 +31,12 @@ final class InputReader implements Iterator<Document> {
                 if (fieldName.toLowerCase().equals("id")) {
                     fields[i] = new IntField(fieldName, 0, Field.Store.YES);
                 } else {
-                    fields[i] = new IntField(fieldName, 0, Field.Store.YES);
+                    fields[i] = new IntField(fieldName, 0, Field.Store.NO);
                 }
             } else if (fieldType.equals("float")) {
-                fields[i] = new FloatField(fieldName, 0F, Field.Store.YES);
+                fields[i] = new FloatField(fieldName, 0F, Field.Store.NO);
             } else {
-                fields[i] = new StringField(fieldName, "", Field.Store.YES);
+                fields[i] = new StringField(fieldName, "", Field.Store.NO);
             }
 
             this.document.add(fields[i]);
