@@ -38,10 +38,9 @@ abstract class Command {
 
     public static void find(String outputDirPath) throws IOException {
         Searcher searcher = new Searcher(outputDirPath);
-        ArrayList<LinkedHashMap<String, String>> result = searcher.find();
+        ArrayList<String> result = searcher.find("");
 
-        // print results
-        // ideally, different formats should be supported e.g. JSON, CSV, XML
+        // print results as a CSV
     }
 
     /**
@@ -72,5 +71,10 @@ abstract class Command {
         System.out.println("- indexer update [ input.csv ] [ index/dir ]");
         System.out.println("- indexer drop [ index/dir ]");
         System.out.println("- indexer find [ all | first n | last n ] from [ index/dir ] where [ criteria ]");
+    }
+
+    public static void printUsageAndExit(int exitCode) {
+        printUsage();
+        System.exit(exitCode);
     }
 }
