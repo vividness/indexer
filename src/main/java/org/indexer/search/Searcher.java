@@ -22,3 +22,4 @@ public class Searcher {
         return result;
     }
 }
+// role, take the results from input reader and return them in a data structure
