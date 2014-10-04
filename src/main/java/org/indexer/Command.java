@@ -1,10 +1,10 @@
 package org.indexer;
 
+import org.apache.lucene.queryparser.classic.ParseException;
 import org.indexer.indexing.Indexer;
 import org.indexer.search.Searcher;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 abstract class Command {
     public static void create(String inputFilePath, String outputDirPath) throws IOException {
@@ -35,14 +35,16 @@ abstract class Command {
         System.out.format("Finished in %.2f seconds.\n", (float) (System.currentTimeMillis() - startTime) / 1000);
     }
 
-    public static void find(String indexDirPath, String queryString) throws IOException {
+    public static void find(String indexDirPath, String[] fields, String queryString) throws IOException, ParseException {
         Searcher searcher = new Searcher(indexDirPath);
-        ArrayList<String> result = searcher.find(queryString);
 
-        System.out.println(result.toString());
-        // print results as a CSV
+        System.out.println(searcher.find(fields, queryString).toString());
+    }
 
-        //todo: index all fields as text, store only ids, search results return only ids
+    public static void find(String indexDirPath, String[] fields, String queryString, int limit) throws IOException, ParseException {
+        Searcher searcher = new Searcher(indexDirPath);
+
+        System.out.println(searcher.find(fields, queryString, limit).toString());
     }
 
     /**
@@ -69,10 +71,10 @@ abstract class Command {
 
         System.out.println("\nUsage:\n");
 
-        System.out.println("- indexer create [ input.csv ] [ index/dir ]");
-        System.out.println("- indexer update [ input.csv ] [ index/dir ]");
-        System.out.println("- indexer drop [ index/dir ]");
-        System.out.println("- INDEXER select [ all | n ] from [ index/dir ] where [ criteria ]");
+        System.out.println("- indexer create index [ index/dir ] from [ input.csv ]");
+        System.out.println("- indexer update index [ index/dir ] from [ input.csv ]");
+        System.out.println("- indexer drop index [ index/dir ]");
+        System.out.println("- indexer find [ all | n ] return [ field1,field2 ... ] from [ index/dir ] where [ criteria ]");
     }
 
     public static void printUsageAndExit(int exitCode) {
