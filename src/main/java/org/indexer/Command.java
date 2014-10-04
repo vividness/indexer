@@ -5,7 +5,6 @@ import org.indexer.search.Searcher;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 
 abstract class Command {
     public static void create(String inputFilePath, String outputDirPath) throws IOException {
@@ -36,11 +35,14 @@ abstract class Command {
         System.out.format("Finished in %.2f seconds.\n", (float) (System.currentTimeMillis() - startTime) / 1000);
     }
 
-    public static void find(String outputDirPath) throws IOException {
-        Searcher searcher = new Searcher(outputDirPath);
-        ArrayList<String> result = searcher.find("");
+    public static void find(String indexDirPath, String queryString) throws IOException {
+        Searcher searcher = new Searcher(indexDirPath);
+        ArrayList<String> result = searcher.find(queryString);
 
+        System.out.println(result.toString());
         // print results as a CSV
+
+        //todo: index all fields as text, store only ids, search results return only ids
     }
 
     /**
@@ -70,7 +72,7 @@ abstract class Command {
         System.out.println("- indexer create [ input.csv ] [ index/dir ]");
         System.out.println("- indexer update [ input.csv ] [ index/dir ]");
         System.out.println("- indexer drop [ index/dir ]");
-        System.out.println("- indexer find [ all | first n | last n ] from [ index/dir ] where [ criteria ]");
+        System.out.println("- INDEXER select [ all | n ] from [ index/dir ] where [ criteria ]");
     }
 
     public static void printUsageAndExit(int exitCode) {
