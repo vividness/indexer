@@ -1,7 +1,10 @@
 package org.indexer.search;
 
+import org.apache.lucene.queryparser.classic.ParseException;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 public class Searcher {
     private InputReader input;
@@ -10,16 +13,11 @@ public class Searcher {
         this.input = Components.getInputReader(indexDirPath);
     }
 
-    public ArrayList<String> find(String queryString) throws IOException {
-        ArrayList<String> result = new ArrayList<String>();
+    public ArrayList<LinkedHashMap<String, String>> find(String[] fields, String queryString) throws IOException, ParseException {
+        return this.input.query(fields, queryString);
+    }
 
-        this.input.query(queryString);
-
-        while (this.input.hasNext()) {
-            result.add(this.input.next());
-        }
-
-        return result;
+    public ArrayList<LinkedHashMap<String, String>> find(String[] fields, String queryString, int limit) throws IOException, ParseException {
+        return this.input.query(fields, queryString, limit);
     }
 }
-// role, take the results from input reader and return them in a data structure
