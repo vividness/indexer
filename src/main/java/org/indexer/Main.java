@@ -1,9 +1,10 @@
 package org.indexer;
 
+import org.apache.lucene.queryparser.classic.ParseException;
 import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ParseException {
         if (args.length == 0) {
             Command.printUsageAndExit(1);
         }
@@ -37,9 +38,15 @@ public class Main {
                 Command.printUsageAndExit(1);
             }
 
-            Command.find(args[4], args[2]);
+            // args
+            // 0    1     2    3   4         5         6       7
+            //find all return id from ./files/output where email:vlad*
+            if (args[1].equals("all")) {
+                Command.find(args[5], args[3].split(","), args[7]);
+            } else {
+                Command.find(args[5], args[3].split(","), args[7], Integer.valueOf(args[1]));
+            }
         }
-
 
         System.exit(0);
     }
