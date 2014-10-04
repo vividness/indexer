@@ -32,7 +32,14 @@ public class Main {
             }
 
             Command.drop(args[1]);
+        } else if (args[0].toLowerCase().equals("find")) {
+            if (args[1].length() == 0) {
+                Command.printUsageAndExit(1);
+            }
+
+            Command.find(args[4], args[2]);
         }
+
 
         System.exit(0);
     }
