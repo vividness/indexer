@@ -1,65 +1,61 @@
 package org.indexer.search;
 
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.LinkedHashMap;
 
-class InputReader implements Iterator<String> {
-    private InputProvider provider;
-    private Iterator<String> result;
-    private QueryParser parser;
+class InputReader {
+    private QueryParser   parser;
     private IndexSearcher searcher;
+    private ArrayList<LinkedHashMap<String, String>> results = new ArrayList<LinkedHashMap<String, String>>();
 
     public InputReader(String indexDirPath) throws IOException {
-        this.provider = Components.Lucene.getInputProvider(indexDirPath);
-        this.parser   = new QueryParser(null, new StandardAnalyzer()); //todo: Move to Components.Lucene
-        this.searcher = new IndexSearcher(this.provider.getReader()); //todo: move to Components.Lucene
+        this.parser   = Components.getQueryParser();
+        this.searcher = Components.getIndexSearcher(indexDirPath);
     }
 
-    public void query(String queryString) throws IOException {
-        Query query;
-        ArrayList<String> results = new ArrayList<String>();
+    public ArrayList<LinkedHashMap<String, String>> query(String[] fields, String queryString) throws IOException, ParseException {
+        Query query = this.parseQuery(queryString);
+        int maxHits = this.findTotalHits(query);
 
-        try {
-            query = this.parser.parse(queryString);
-        } catch (ParseException error) {
-            // todo handle this exception maybe in the command class
-            return;
+        return this.query(fields, queryString, maxHits);
+    }
+
+    public ArrayList<LinkedHashMap<String, String>> query(String[] fields, String queryString, int limit) throws IOException, ParseException {
+        Query query = this.parseQuery(queryString);
+
+        for (ScoreDoc result : this.findMatchingDocuments(query, limit)) {
+            LinkedHashMap<String, String> document = new LinkedHashMap<String, String>();
+
+            for (String field : fields) {
+                document.put(field, this.searcher.doc(result.doc).get(field));
+            }
+
+            results.add(document);
         }
 
+        return results;
+    }
+
+    private int findTotalHits(Query query) throws IOException {
         TotalHitCountCollector hitsCollector = new TotalHitCountCollector();
         this.searcher.search(query, hitsCollector);
 
-        int maxHits = Math.max(1, hitsCollector.getTotalHits());
+        return Math.max(1, hitsCollector.getTotalHits());
+    }
 
+    private ScoreDoc[] findMatchingDocuments(Query query, int maxHits) throws IOException {
         TopScoreDocCollector docsCollector = TopScoreDocCollector.create(maxHits, true);
         this.searcher.search(query, docsCollector);
 
-        ScoreDoc[] topDocs = docsCollector.topDocs().scoreDocs;
-
-        for (ScoreDoc hit : topDocs) {
-            results.add(this.searcher.doc(hit.doc).get("id"));
-        }
-
-        this.result = results.iterator();
+        return docsCollector.topDocs().scoreDocs;
     }
 
-    @Override
-    public boolean hasNext() {
-        return this.result.hasNext();
+    private Query parseQuery(String queryString) throws ParseException {
+        return this.parser.parse(queryString);
     }
-
-    @Override
-    public String next() {
-        return this.result.next();
-    }
-
-    @Override
-    public void remove() {}
 }
-//role, iterator over the results
