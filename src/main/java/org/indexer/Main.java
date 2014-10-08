@@ -38,9 +38,6 @@ public class Main {
                 Command.printUsageAndExit(1);
             }
 
-            // args
-            // 0    1     2    3   4         5         6       7
-            //find all return id from ./files/output where email:vlad*
             if (args[1].equals("all")) {
                 Command.find(args[5], args[3].split(","), args[7]);
             } else {
