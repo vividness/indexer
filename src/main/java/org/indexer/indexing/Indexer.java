@@ -5,7 +5,7 @@ import java.io.IOException;
 public class Indexer {
     public enum OpenMode { CREATE, APPEND, CREATE_OR_APPEND }
 
-    private InputReader input;
+    private InputReader  input;
     private OutputWriter output;
 
     public Indexer(String inputFilePath, String outputDirPath) throws IOException {
