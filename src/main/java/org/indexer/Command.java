@@ -47,11 +47,6 @@ abstract class Command {
         System.out.println(searcher.find(fields, queryString, limit).toString());
     }
 
-    /**
-     * WARNING! This one appears broken. It doesn't remove documents
-     * and maybe it shouldn't because of the lib performance.
-     * Double check updates once the search components is built.
-     */
     public static void update(String inputFilePath, String outputDirPath) throws IOException {
         Long startTime = System.currentTimeMillis();
         Indexer index  = new Indexer(inputFilePath, outputDirPath, Indexer.OpenMode.CREATE_OR_APPEND);
@@ -63,17 +58,17 @@ abstract class Command {
     }
 
     public static void printUsage() {
-        System.out.println("Indexer, version 0.0\n");
+        System.out.println("Indexer, version 1.0\n");
 
         System.out.println("Indexes and searches the contents of a CSV file.");
-        System.out.println("- All the fields in the file must be named in the following fashion [field_name]:[field_type] (e.g. id:integer,email:string).");
         System.out.println("- The CSV file must have one column named id which is the unique identifier.");
 
         System.out.println("\nUsage:\n");
 
-        System.out.println("- indexer create index [ index/dir ] from [ input.csv ]");
-        System.out.println("- indexer update index [ index/dir ] from [ input.csv ]");
-        System.out.println("- indexer drop index [ index/dir ]");
+        System.out.println("- indexer create [ index/dir ] from [ input.csv ]");
+        System.out.println("- indexer append [ index/dir ] from [ input.csv ]");
+        System.out.println("- indexer update [ index/dir ] from [ input.csv ]");
+        System.out.println("- indexer drop [ index/dir ]");
         System.out.println("- indexer find [ all | n ] return [ \"field1,field2 ...\" ] from [ index/dir ] where [ \"criteria AND criteria ...\"]");
     }
 
