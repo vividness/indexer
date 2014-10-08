@@ -65,16 +65,16 @@ abstract class Command {
     public static void printUsage() {
         System.out.println("Indexer, version 0.0\n");
 
-        System.out.println("Indexes all columns of the input CSV file.");
+        System.out.println("Indexes and searches the contents of a CSV file.");
         System.out.println("- All the fields in the file must be named in the following fashion [field_name]:[field_type] (e.g. id:integer,email:string).");
-        System.out.println("- The CSV file must have the first field named as id:integer.");
+        System.out.println("- The CSV file must have one column named id which is the unique identifier.");
 
         System.out.println("\nUsage:\n");
 
         System.out.println("- indexer create index [ index/dir ] from [ input.csv ]");
         System.out.println("- indexer update index [ index/dir ] from [ input.csv ]");
         System.out.println("- indexer drop index [ index/dir ]");
-        System.out.println("- indexer find [ all | n ] return [ field1,field2 ... ] from [ index/dir ] where [ criteria ]");
+        System.out.println("- indexer find [ all | n ] return [ \"field1,field2 ...\" ] from [ index/dir ] where [ \"criteria AND criteria ...\"]");
     }
 
     public static void printUsageAndExit(int exitCode) {
