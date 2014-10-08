@@ -4,6 +4,7 @@ import org.apache.lucene.queryparser.classic.ParseException;
 import java.io.IOException;
 
 public class Main {
+    //todo: handle exceptions with proper error message in the output
     public static void main(String[] args) throws IOException, ParseException {
         if (args.length == 0) {
             Command.printUsageAndExit(1);
