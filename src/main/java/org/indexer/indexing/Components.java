@@ -21,10 +21,6 @@ abstract class Components {
         public static CSVParser getCsvParser(String inputFilePath) throws IOException {
             return CSVParser.parse(new File(inputFilePath), Charset.defaultCharset(), CSVFormat.RFC4180.withHeader());
         }
-
-        public static InputProvider getInputProvider(String inputFilePath) throws IOException {
-            return new InputProvider(inputFilePath);
-        }
     }
 
     public static class Lucene {
