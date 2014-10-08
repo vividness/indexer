@@ -1,10 +1,13 @@
 package org.indexer;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.indexer.indexing.Indexer;
 import org.indexer.search.Searcher;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 abstract class Command {
     public static void create(String inputFilePath, String outputDirPath) throws IOException {
@@ -38,13 +41,25 @@ abstract class Command {
     public static void find(String indexDirPath, String[] fields, String queryString) throws IOException, ParseException {
         Searcher searcher = new Searcher(indexDirPath);
 
-        System.out.println(searcher.find(fields, queryString).toString());
+        ArrayList<LinkedHashMap<String, String>> result = searcher.find(fields, queryString);
+
+        System.out.println(StringUtils.join(result.get(0).keySet().toArray(), ","));
+
+        for (LinkedHashMap<String, String> row : result) {
+            System.out.println(StringUtils.join(row.values().toArray(), ","));
+        }
     }
 
     public static void find(String indexDirPath, String[] fields, String queryString, int limit) throws IOException, ParseException {
         Searcher searcher = new Searcher(indexDirPath);
 
-        System.out.println(searcher.find(fields, queryString, limit).toString());
+        ArrayList<LinkedHashMap<String, String>> result = searcher.find(fields, queryString, limit);
+
+        System.out.println(StringUtils.join(result.get(0).keySet().toArray(), ","));
+
+        for (LinkedHashMap<String, String> row : result) {
+            System.out.println(StringUtils.join(row.values().toArray(), ","));
+        }
     }
 
     public static void update(String inputFilePath, String outputDirPath) throws IOException {
