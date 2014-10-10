@@ -58,14 +58,7 @@ final class InputReader implements Iterator<Document> {
 
     private void initDocumentFields() {
         for (int i = 0; i < this.fieldNames.length; i++) {
-            //todo: 
-            // read the first record and try to detect which types are the fields
-            // so we don't use the StringField class for all the fields
-            // CSVRecord row = this.iterator.next();
-            // 
-            // support Integer Float String and Text for the beginning.
             this.fields[i] = new StringField(this.fieldNames[i], "", Field.Store.YES);
-
             this.document.add(this.fields[i]);
         }
     }
