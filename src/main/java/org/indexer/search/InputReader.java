@@ -42,14 +42,14 @@ class InputReader {
     }
 
     private int findTotalHits(Query query) throws IOException {
-        TotalHitCountCollector hitsCollector = new TotalHitCountCollector();
+        TotalHitCountCollector hitsCollector = new TotalHitCountCollector(); //todo move to components
         this.searcher.search(query, hitsCollector);
 
         return Math.max(1, hitsCollector.getTotalHits());
     }
 
     private ScoreDoc[] findMatchingDocuments(Query query, int maxHits) throws IOException {
-        TopScoreDocCollector docsCollector = TopScoreDocCollector.create(maxHits, true);
+        TopScoreDocCollector docsCollector = TopScoreDocCollector.create(maxHits, true); //todo move to components
         this.searcher.search(query, docsCollector);
 
         return docsCollector.topDocs().scoreDocs;
