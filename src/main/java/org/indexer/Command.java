@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 abstract class Command {
-    public static void create(String inputFilePath, String outputDirPath) throws IOException {
+    public static void create(String inputFilePath, String outputDirPath) {
         Long startTime = System.currentTimeMillis();
         Indexer index  = new Indexer(inputFilePath, outputDirPath);
 
@@ -20,7 +20,7 @@ abstract class Command {
         System.out.format("Finished in %.2f seconds.\n", (float) (System.currentTimeMillis() - startTime) / 1000);
     }
 
-    public static void append(String inputFilePath, String outputDirPath) throws IOException {
+    public static void append(String inputFilePath, String outputDirPath) {
         Long startTime = System.currentTimeMillis();
         Indexer index  = new Indexer(inputFilePath, outputDirPath, Indexer.OpenMode.APPEND);
 
@@ -30,7 +30,7 @@ abstract class Command {
         System.out.format("Finished in %.2f seconds.\n", (float) (System.currentTimeMillis() - startTime) / 1000);
     }
 
-    public static void drop(String outputDirPath) throws IOException {
+    public static void drop(String outputDirPath) {
         Long startTime = System.currentTimeMillis();
         System.out.print("Dropping index " + outputDirPath + " ... ");
 
@@ -38,31 +38,47 @@ abstract class Command {
         System.out.format("Finished in %.2f seconds.\n", (float) (System.currentTimeMillis() - startTime) / 1000);
     }
 
-    public static void find(String indexDirPath, String[] fields, String queryString) throws IOException, ParseException {
-        Searcher searcher = new Searcher(indexDirPath);
+    public static void find(String indexDirPath, String[] fields, String queryString) {
+        try {
+            Searcher searcher = new Searcher(indexDirPath);
 
-        ArrayList<LinkedHashMap<String, String>> result = searcher.find(fields, queryString);
+            ArrayList<LinkedHashMap<String, String>> result = searcher.find(fields, queryString);
 
-        System.out.println(StringUtils.join(result.get(0).keySet().toArray(), ","));
+            System.out.println(StringUtils.join(result.get(0).keySet().toArray(), ","));
 
-        for (LinkedHashMap<String, String> row : result) {
-            System.out.println(StringUtils.join(row.values().toArray(), ","));
+            for (LinkedHashMap<String, String> row : result) {
+                System.out.println(StringUtils.join(row.values().toArray(), ","));
+            }
+        } catch (IOException error) {
+            System.out.println(error.getMessage());
+            System.exit(1);
+        } catch (ParseException error) {
+            System.out.println(error.getMessage());
+            System.exit(1);
         }
     }
 
-    public static void find(String indexDirPath, String[] fields, String queryString, int limit) throws IOException, ParseException {
-        Searcher searcher = new Searcher(indexDirPath);
+    public static void find(String indexDirPath, String[] fields, String queryString, int limit) {
+        try {
+            Searcher searcher = new Searcher(indexDirPath);
 
-        ArrayList<LinkedHashMap<String, String>> result = searcher.find(fields, queryString, limit);
+            ArrayList<LinkedHashMap<String, String>> result = searcher.find(fields, queryString, limit);
 
-        System.out.println(StringUtils.join(result.get(0).keySet().toArray(), ","));
+            System.out.println(StringUtils.join(result.get(0).keySet().toArray(), ","));
 
-        for (LinkedHashMap<String, String> row : result) {
-            System.out.println(StringUtils.join(row.values().toArray(), ","));
+            for (LinkedHashMap<String, String> row : result) {
+                System.out.println(StringUtils.join(row.values().toArray(), ","));
+            }
+        } catch (IOException error) {
+            System.out.println(error.getMessage());
+            System.exit(1);
+        } catch (ParseException error) {
+            System.out.println(error.getMessage());
+            System.exit(1);
         }
     }
 
-    public static void update(String inputFilePath, String outputDirPath) throws IOException {
+    public static void update(String inputFilePath, String outputDirPath) {
         Long startTime = System.currentTimeMillis();
         Indexer index  = new Indexer(inputFilePath, outputDirPath, Indexer.OpenMode.CREATE_OR_APPEND);
 
