@@ -28,10 +28,6 @@ abstract class Components {
             return new Document();
         }
 
-        public static Field[] getEmptyDocumentFields(int n) {
-            return new Field[n];
-        }
-
         public static IndexWriter getIndexWriter(String outputDirPath) throws IOException {
             Directory outputDir = FSDirectory.open(new File(outputDirPath));
             Analyzer analyzer   = new StandardAnalyzer(Version.LUCENE_4_10_0);
