@@ -11,31 +11,46 @@ import java.util.LinkedHashMap;
 
 abstract class Command {
     public static void create(String inputFilePath, String outputDirPath) {
-        Long startTime = System.currentTimeMillis();
-        Indexer index  = new Indexer(inputFilePath, outputDirPath);
+        try {
+            Long startTime = System.currentTimeMillis();
+            Indexer index  = new Indexer(inputFilePath, outputDirPath);
 
-        System.out.print("Creating index " + outputDirPath + " from " + inputFilePath + " ... ");
-        index.insert();
+            System.out.print("Creating index " + outputDirPath + " from " + inputFilePath + " ... ");
+            index.insert();
 
-        System.out.format("Finished in %.2f seconds.\n", (float) (System.currentTimeMillis() - startTime) / 1000);
+            System.out.format("Finished in %.2f seconds.\n", (float) (System.currentTimeMillis() - startTime) / 1000);
+        } catch (IOException error) {
+            System.out.println(error.getMessage());
+            System.exit(1);
+        }
     }
 
     public static void append(String inputFilePath, String outputDirPath) {
-        Long startTime = System.currentTimeMillis();
-        Indexer index  = new Indexer(inputFilePath, outputDirPath, Indexer.OpenMode.APPEND);
+        try {
+            Long startTime = System.currentTimeMillis();
+            Indexer index = new Indexer(inputFilePath, outputDirPath, Indexer.OpenMode.APPEND);
 
-        System.out.print("Appending index " + outputDirPath + " with " + inputFilePath + " ... ");
-        index.insert();
+            System.out.print("Appending index " + outputDirPath + " with " + inputFilePath + " ... ");
+            index.insert();
 
-        System.out.format("Finished in %.2f seconds.\n", (float) (System.currentTimeMillis() - startTime) / 1000);
+            System.out.format("Finished in %.2f seconds.\n", (float) (System.currentTimeMillis() - startTime) / 1000);
+        } catch (IOException error) {
+            System.out.println(error.getMessage());
+            System.exit(1);
+        }
     }
 
     public static void drop(String outputDirPath) {
-        Long startTime = System.currentTimeMillis();
-        System.out.print("Dropping index " + outputDirPath + " ... ");
+        try {
+            Long startTime = System.currentTimeMillis();
+            System.out.print("Dropping index " + outputDirPath + " ... ");
 
-        Indexer.drop(outputDirPath);
-        System.out.format("Finished in %.2f seconds.\n", (float) (System.currentTimeMillis() - startTime) / 1000);
+            Indexer.drop(outputDirPath);
+            System.out.format("Finished in %.2f seconds.\n", (float) (System.currentTimeMillis() - startTime) / 1000);
+        } catch (IOException error) {
+            System.out.println(error.getMessage());
+            System.exit(1);
+        }
     }
 
     public static void find(String indexDirPath, String[] fields, String queryString) {
@@ -79,13 +94,18 @@ abstract class Command {
     }
 
     public static void update(String inputFilePath, String outputDirPath) {
-        Long startTime = System.currentTimeMillis();
-        Indexer index  = new Indexer(inputFilePath, outputDirPath, Indexer.OpenMode.CREATE_OR_APPEND);
+        try {
+            Long startTime = System.currentTimeMillis();
+            Indexer index = new Indexer(inputFilePath, outputDirPath, Indexer.OpenMode.CREATE_OR_APPEND);
 
-        System.out.print("Updating index " + outputDirPath + " with " + inputFilePath + " ... ");
-        index.update();
+            System.out.print("Updating index " + outputDirPath + " with " + inputFilePath + " ... ");
+            index.update();
 
-        System.out.format("Finished in %.2f seconds.\n", (float) (System.currentTimeMillis() - startTime) / 1000);
+            System.out.format("Finished in %.2f seconds.\n", (float) (System.currentTimeMillis() - startTime) / 1000);
+        } catch (IOException error) {
+            System.out.println(error.getMessage());
+            System.exit(1);
+        }
     }
 
     public static void printUsage() {
