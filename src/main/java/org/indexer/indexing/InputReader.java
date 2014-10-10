@@ -1,7 +1,7 @@
 package org.indexer.indexing;
 
-import org.apache.commons.csv.CSVParser;
 import org.apache.lucene.document.*;
+import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import java.io.IOException;
@@ -11,24 +11,23 @@ import java.util.Iterator;
 final class InputReader implements Iterator<Document> {
     private CSVParser input;
     private Document  document;
-    private Field     fields[];
+    private Field[]   fields;
+    private String[]  fieldNames;
 
-    private Iterator<CSVRecord> inputIterator;
+    private Iterator<CSVRecord> iterator;
 
     public InputReader(String inputFilePath) throws IOException {
         this.input    = Components.CSV.getCsvParser(inputFilePath);
         this.document = Components.Lucene.getEmptyDocument();
+        this.iterator = input.iterator();
 
-        this.inputIterator = input.iterator();
-
-        // todo: this can be one method
-        this.fields   = Components.Lucene.getEmptyDocumentFields(this.input.getHeaderMap().size());
+        this.initFieldNames();
         this.initDocumentFields();
     }
 
     @Override
     public Document next() {
-        CSVRecord row = this.inputIterator.next();
+        CSVRecord row = this.iterator.next();
 
         for (int i = 0; i < this.fields.length; i++) {
             if (this.fields[i].getClass() == IntField.class) {
@@ -45,25 +44,29 @@ final class InputReader implements Iterator<Document> {
 
     @Override
     public boolean hasNext() {
-        return this.inputIterator.hasNext();
+        return this.iterator.hasNext();
     }
 
     @Override
     public void remove() {}
 
-    private void initDocumentFields() {
-        String[] inputFieldNames = this.getFieldNames();
+    private void initFieldNames() {
+        Object[] header = this.input.getHeaderMap().keySet().toArray();
+        this.fieldNames = Arrays.copyOf(header, header.length, String[].class);
+        this.fields     = new Field[this.fieldNames.length];
+    }
 
-        for (int i = 0; i < inputFieldNames.length; i++) {
-            this.fields[i] = new StringField(inputFieldNames[i], "", Field.Store.YES);
+    private void initDocumentFields() {
+        for (int i = 0; i < this.fieldNames.length; i++) {
+            //todo: 
+            // read the first record and try to detect which types are the fields
+            // so we don't use the StringField class for all the fields
+            // CSVRecord row = this.iterator.next();
+            // 
+            // support Integer Float String and Text for the beginning.
+            this.fields[i] = new StringField(this.fieldNames[i], "", Field.Store.YES);
 
             this.document.add(this.fields[i]);
         }
-    }
-
-    private String[] getFieldNames() {
-        Object[] fieldNames = this.input.getHeaderMap().keySet().toArray();
-
-        return Arrays.copyOf(fieldNames, fieldNames.length, String[].class);
     }
 }
