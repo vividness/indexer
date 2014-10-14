@@ -17,16 +17,35 @@ import java.nio.charset.Charset;
 
 abstract class Components {
     public static class CSV {
+        /**
+         * Apache commons CSV parser.
+         *
+         * @param inputFilePath Path to the CSV file.
+         * @return Apache commons CSV parser instance.
+         * @throws IOException
+         */
         public static CSVParser getCsvParser(String inputFilePath) throws IOException {
             return CSVParser.parse(new File(inputFilePath), Charset.defaultCharset(), CSVFormat.RFC4180.withHeader());
         }
     }
 
     public static class Lucene {
+        /**
+         * Creates and initializes new instance of Document class.
+         *
+         * @return Lucene's Document instance.
+         */
         public static Document getEmptyDocument() {
             return new Document();
         }
 
+        /**
+         * Creates and initializes a new instance of Lucene's IndexWriter class in CREATE open mode.
+         *
+         * @param outputDirPath Path to directory where the index is going to be created.
+         * @return Initialized IndexWriter instance.
+         * @throws IOException
+         */
         public static IndexWriter getIndexWriter(String outputDirPath) throws IOException {
             Directory outputDir = FSDirectory.open(new File(outputDirPath));
             Analyzer analyzer   = new StandardAnalyzer(Version.LUCENE_4_10_0);
@@ -35,6 +54,14 @@ abstract class Components {
             return new IndexWriter(outputDir, config);
         }
 
+        /**
+         * Creates and initializes a new instance of Lucene's IndexWriter class.
+         *
+         * @param outputDirPath Path to directory where the index is going to be created.
+         * @param mode Open mode in which the index will be accesses.
+         * @return Initialized IndexWriter instance.
+         * @throws IOException
+         */
         public static IndexWriter getIndexWriter(String outputDirPath, Indexer.OpenMode mode) throws IOException {
             IndexWriterConfig.OpenMode luceneOpenMode;
 
@@ -54,14 +81,36 @@ abstract class Components {
         }
     }
 
+    /**
+     * Creates an instance of the OutputWriter class in CREATE open mode.
+     *
+     * @param outputDirPath Path to dir where the index is going to be stored.
+     * @return OutputWriter instance.
+     * @throws IOException
+     */
     public static OutputWriter getOutputWriter(String outputDirPath) throws IOException {
         return new OutputWriter(outputDirPath);
     }
 
+    /**
+     * Creates an instance of the OutputWriter class in specified open mode.
+     *
+     * @param outputDirPath Path to directory where the index is going to be created.
+     * @param mode Open mode in which the index will be accesses.
+     * @return OutputWriter instance.
+     * @throws IOException
+     */
     public static OutputWriter getOutputWriter(String outputDirPath, Indexer.OpenMode mode) throws IOException {
         return new OutputWriter(outputDirPath, mode);
     }
 
+    /**
+     * Creates an InputReader instance.
+     *
+     * @param inputFilePath Path to the input file.
+     * @return InputReader instance.
+     * @throws IOException
+     */
     public static InputReader getInputReader(String inputFilePath) throws IOException {
         return new InputReader(inputFilePath);
     }
