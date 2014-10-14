@@ -10,6 +10,12 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 abstract class Command {
+    /**
+     * Create command. Used in creating a new index.
+     *
+     * @param inputFilePath Path to the input file.
+     * @param outputDirPath Path to the output dir where your index will be stored.
+     */
     public static void create(String inputFilePath, String outputDirPath) {
         try {
             Long startTime = System.currentTimeMillis();
@@ -25,6 +31,12 @@ abstract class Command {
         }
     }
 
+    /**
+     * Appends documents to an existing index.
+     *
+     * @param inputFilePath Path to the input file.
+     * @param outputDirPath Path to the output dir where your index will be stored.
+     */
     public static void append(String inputFilePath, String outputDirPath) {
         try {
             Long startTime = System.currentTimeMillis();
@@ -40,6 +52,11 @@ abstract class Command {
         }
     }
 
+    /**
+     * Drops an existing index.
+     *
+     * @param outputDirPath Path to the output dir where your index will be stored.
+     */
     public static void drop(String outputDirPath) {
         try {
             Long startTime = System.currentTimeMillis();
@@ -53,6 +70,13 @@ abstract class Command {
         }
     }
 
+    /**
+     * Find command. Searches the index and prints the results in CSV format.
+     *
+     * @param indexDirPath Path to the input file.
+     * @param fields Fields that will be returned e.g. email, id, firstname etc.
+     * @param queryString Search criteria, Lucene query.
+     */
     public static void find(String indexDirPath, String[] fields, String queryString) {
         try {
             Searcher searcher = new Searcher(indexDirPath);
@@ -73,6 +97,14 @@ abstract class Command {
         }
     }
 
+    /**
+     * Find command. Searches the index and prints the results in CSV format.
+     *
+     * @param indexDirPath Path to the input file.
+     * @param fields Fields that will be returned e.g. email, id, firstname etc.
+     * @param limit Maximum number of results
+     * @param queryString Search criteria, Lucene query.
+     */
     public static void find(String indexDirPath, String[] fields, String queryString, int limit) {
         try {
             Searcher searcher = new Searcher(indexDirPath);
@@ -93,6 +125,12 @@ abstract class Command {
         }
     }
 
+    /**
+     * Updates the index with the new content.
+     *
+     * @param inputFilePath Path to the input file.
+     * @param outputDirPath Path to the index dir.
+     */
     public static void update(String inputFilePath, String outputDirPath) {
         try {
             Long startTime = System.currentTimeMillis();
@@ -108,6 +146,9 @@ abstract class Command {
         }
     }
 
+    /**
+     * Command to print the command line utility usage.
+     */
     public static void printUsage() {
         System.out.println("Indexer, version 1.0\n");
 
@@ -123,6 +164,11 @@ abstract class Command {
         System.out.println("- indexer find [ all | n ] return [ \"field1,field2 ...\" ] from [ index/dir ] where [ \"criteria AND criteria ...\"]");
     }
 
+    /**
+     * Shorthand for print usage and exit.
+     *
+     * @param exitCode Exit code to return to the shell process.
+     */
     public static void printUsageAndExit(int exitCode) {
         printUsage();
         System.exit(exitCode);
