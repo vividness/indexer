@@ -1,0 +1,9 @@
+.DS_Store
+.idea
+*.cfe
+*.cfs
+*.si
+*.gen
+*.lock
+segments_*
+files/input/users.csv
