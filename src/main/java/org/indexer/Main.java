@@ -1,8 +1,6 @@
 package org.indexer;
 
 public class Main {
-    //todo: tests
-    //todo: javadoc
     public static void main(String[] args) {
         if (args.length == 0) {
             Command.printUsageAndExit(1);

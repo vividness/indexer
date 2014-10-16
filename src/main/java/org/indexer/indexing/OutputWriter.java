@@ -10,7 +10,7 @@ final class OutputWriter {
     /**
      * Index writer instance. Use Components to create a new instance.
      */
-    private final IndexWriter  output;
+    private final IndexWriter output;
 
     /**
      * Document unique identifier field.
