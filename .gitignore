@@ -6,4 +6,5 @@
 *.gen
 *.lock
 segments_*
+segments.gen
 files/input/users.csv
