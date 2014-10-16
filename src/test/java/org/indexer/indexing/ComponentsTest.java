@@ -1,6 +1,7 @@
 package org.indexer.indexing;
 
 import org.apache.commons.csv.CSVParser;
+import org.apache.lucene.index.IndexWriter;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -8,23 +9,21 @@ import static org.junit.Assert.*;
 public class ComponentsTest {
     @Test
     public void testGetOutputWriterOKWithCreateOpenMode() throws Exception {
-        OutputWriter writer = Components.getOutputWriter("src/test/resources/index1");
+        OutputWriter writer;
 
+        writer = Components.getOutputWriter("src/test/resources/index1");
         assertEquals(writer.getClass(), OutputWriter.class);
         writer.close();
-    }
 
-    @Test
-    public void testGetOutputWriterOKWithAppendOpenMode() throws Exception {
-        OutputWriter writer = Components.getOutputWriter("src/test/resources/index1", Indexer.OpenMode.APPEND);
-
+        writer = Components.getOutputWriter("src/test/resources/index1", Indexer.OpenMode.CREATE);
         assertEquals(writer.getClass(), OutputWriter.class);
         writer.close();
-    }
 
-    @Test
-    public void testGetOutputWriterOKWithAppendOrCreateOpenMode() throws Exception {
-        OutputWriter writer = Components.getOutputWriter("src/test/resources/index1", Indexer.OpenMode.APPEND);
+        writer = Components.getOutputWriter("src/test/resources/index1", Indexer.OpenMode.APPEND);
+        assertEquals(writer.getClass(), OutputWriter.class);
+        writer.close();
+
+        writer = Components.getOutputWriter("src/test/resources/index1", Indexer.OpenMode.CREATE_OR_APPEND);
 
         assertEquals(writer.getClass(), OutputWriter.class);
         writer.close();
@@ -51,5 +50,30 @@ public class ComponentsTest {
     @Test(expected=java.io.FileNotFoundException.class)
     public void testGetCsvParserError() throws Exception {
         Components.CSV.getCsvParser("src/test/resources/input_files/file_does_not_exist");
+    }
+
+    @Test
+    public void testGetIndexWriterOK() throws Exception {
+        IndexWriter writer = Components.Lucene.getIndexWriter("src/test/resources/index1");
+
+        assertEquals(writer.getClass(), IndexWriter.class);
+        writer.close();
+    }
+
+    @Test
+    public void testGetIndexWriterOKWithOpenMode() throws Exception {
+        IndexWriter writer;
+
+        writer = Components.Lucene.getIndexWriter("src/test/resources/index1", Indexer.OpenMode.CREATE);
+        assertEquals(writer.getClass(), IndexWriter.class);
+        writer.close();
+
+        writer = Components.Lucene.getIndexWriter("src/test/resources/index1", Indexer.OpenMode.CREATE_OR_APPEND);
+        assertEquals(writer.getClass(), IndexWriter.class);
+        writer.close();
+
+        writer = Components.Lucene.getIndexWriter("src/test/resources/index1", Indexer.OpenMode.APPEND);
+        assertEquals(writer.getClass(), IndexWriter.class);
+        writer.close();
     }
 }
