@@ -6,16 +6,11 @@ import org.apache.lucene.index.Term;
 
 import java.io.IOException;
 
-final class OutputWriter {
+class OutputWriter {
     /**
      * Index writer instance. Use Components to create a new instance.
      */
     private final IndexWriter output;
-
-    /**
-     * Document unique identifier field.
-     */
-    private final String ID_FIELD;
 
     /**
      * Opens index for writing with default CREATE mode and "id" as the unique identifier.
@@ -24,8 +19,7 @@ final class OutputWriter {
      * @throws IOException
      */
     public OutputWriter(String outputDirPath) throws IOException {
-        this.output   = Components.Lucene.getIndexWriter(outputDirPath);
-        this.ID_FIELD = "id";
+        this.output = Components.Lucene.getIndexWriter(outputDirPath);
     }
 
     /**
@@ -36,33 +30,7 @@ final class OutputWriter {
      * @throws IOException
      */
     public OutputWriter(String outputDirPath, Indexer.OpenMode mode) throws IOException {
-        this.output   = Components.Lucene.getIndexWriter(outputDirPath, mode);
-        this.ID_FIELD = "id";
-    }
-
-    /**
-     * Opens index for writing.
-     *
-     * @param outputDirPath Path to the dir where the index will be created.
-     * @param mode Index open mode.
-     * @param idField Unique identifier for each document that will be added to the index.
-     * @throws IOException
-     */
-    public OutputWriter(String outputDirPath, Indexer.OpenMode mode, String idField) throws IOException {
-        this.output   = Components.Lucene.getIndexWriter(outputDirPath, mode);
-        this.ID_FIELD = idField;
-    }
-
-    /**
-     * Opens index for writing in CREATE open mode.
-     *
-     * @param outputDirPath Path to the dir where the index will be created.
-     * @param idField Unique identifier for each document that will be added to the index.
-     * @throws IOException
-     */
-    public OutputWriter(String outputDirPath, String idField) throws IOException {
-        this.output   = Components.Lucene.getIndexWriter(outputDirPath);
-        this.ID_FIELD = idField;
+        this.output = Components.Lucene.getIndexWriter(outputDirPath, mode);
     }
 
     /**
@@ -82,7 +50,8 @@ final class OutputWriter {
      * @throws IOException
      */
     public void update(Document doc) throws IOException {
-        this.output.updateDocument(new Term(this.ID_FIELD, doc.get(this.ID_FIELD)), doc);
+        String idField = doc.getFields().get(0).name();
+        this.output.updateDocument(new Term(idField, doc.get(idField)), doc);
     }
 
     /**
