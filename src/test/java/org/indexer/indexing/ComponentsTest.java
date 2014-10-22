@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 public class ComponentsTest {
     @Test
     public void testGetOutputWriterOKWithCreateOpenMode() throws Exception {
-        final String indexDir = "src/test/resources/ComponentsTest/testGetOutputWriterOKWithCreateOpenMode";
+        String indexDir = "src/test/resources/ComponentsTest/testGetOutputWriterOKWithCreateOpenMode";
 
         OutputWriter writer = Components.getOutputWriter(indexDir);
         assertEquals(writer.getClass(), OutputWriter.class);
