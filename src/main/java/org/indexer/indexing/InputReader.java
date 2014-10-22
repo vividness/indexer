@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
 
-final class InputReader implements Iterator<Document> {
+class InputReader implements Iterator<Document> {
     /**
      * Apache commons csv parser.
      */
@@ -23,12 +23,12 @@ final class InputReader implements Iterator<Document> {
     /**
      * An array of fields. It's a de facto schema of the index.
      */
-    private Field[]   fields;
+    private Field[] fields;
 
     /**
      * CSV column names extracted from the csv file header.
      */
-    private String[]  fieldNames;
+    private String[] fieldNames;
 
     /**
      * Use iterator to read the contents of the CSV file.
@@ -91,8 +91,11 @@ final class InputReader implements Iterator<Document> {
     /**
      * Initializes filed names from the CSV file header.
      */
-    private void initFieldNames() {
+    private void initFieldNames() throws IOException {
         Object[] header = this.input.getHeaderMap().keySet().toArray();
+
+        if (header.length == 0) throw new IOException("CSV file doesn't have headers");
+
         this.fieldNames = Arrays.copyOf(header, header.length, String[].class);
         this.fields     = new Field[this.fieldNames.length];
     }
