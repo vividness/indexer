@@ -82,4 +82,14 @@ public class Indexer {
         output.drop();
         output.close();
     }
+
+    /**
+     * Closes the input and the output resources.
+     *
+     * @throws IOException
+     */
+    public void close() throws IOException {
+        this.input.close();
+        this.output.close();
+    }
 }
