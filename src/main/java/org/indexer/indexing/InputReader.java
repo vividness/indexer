@@ -51,6 +51,15 @@ class InputReader implements Iterator<Document> {
     }
 
     /**
+     * Closes the input stream.
+     *
+     * @throws IOException
+     */
+    public void close() throws IOException {
+        this.input.close();
+    }
+
+    /**
      * Gets a CSV record and loads the values in the document fields.
      *
      * @return Document with the fields loaded from the CSV.
