@@ -2,13 +2,12 @@ Indexer
 ==
 Indexer for CSV files. Faster than ElasticSearch although less flexible.
 
-Quick start
+Usage
 -- 
 Indexes and searches the contents of a CSV file.
 
 The first column in the input file is the ID field for each indexed document. 
 
-Usage:
  * indexer create [ index/dir ] from [ input.csv ]
  * indexer append [ index/dir ] from [ input.csv ]
  * indexer update [ index/dir ] from [ input.csv ]
